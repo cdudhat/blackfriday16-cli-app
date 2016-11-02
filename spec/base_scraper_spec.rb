@@ -12,8 +12,8 @@ end
 
 describe "#scrape_vendor_page" do
   it "is a class method that scrapes a vendor's profile page and returns a hash of attributes for that deal page" do
-    page_url = "http://dealnews.com/black-friday/s5843/Dollar-General/"
+    page_url = "http://dealnews.com/black-friday/s638/Dell-Home/"
     scraped_page = Scraper.scrape_vendor_page(page_url)
-    expect(scraped_page).to be_a(Hash)
+    expect(scraped_page).to be_a(Array)
   end
 end

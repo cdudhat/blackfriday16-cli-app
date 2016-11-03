@@ -5,17 +5,20 @@ require 'pry'
 class Scraper
 
   def self.scrape_index_page(index_url)
-    index_page = Nokogiri::HTML(open(index_url))
+    index_page = Nokogiri::HTML(open(index_url))#.css("div.main").css("div.simple-vendor-grid")[1]
 
     vendor_index = []
+    counter = 1
 
-    deal_page = index_page.css("div.simple-vendor-grid div.line.grid-line.content-line").each do |vendor_line|
+    deal_page = index_page.css("h3+div.simple-vendor-grid")[1..-1].css("div.line.grid-line.content-line").each do |vendor_line|
       vendor_line.css("div.unit.tile.size1of3").each do |vendor|
         if vendor.css("div.content-box-hd").css("a").any?
           vendor_details = {
-            :vendor_name => vendor.css("div.content-box-hd").css("a").text,
-            :vendor_url => vendor.css("div.content-box-hd").css("a").attribute("href").value
+            :number => counter,
+            :name => vendor.css("div.content-box-hd").css("a").text,
+            :page_url => vendor.css("div.content-box-hd").css("a").attribute("href").value
           }
+          counter+=1
         else
           break
         end
@@ -59,6 +62,7 @@ class Scraper
   #  binding.pry
   #end
 
+  #Shows all the deals of a particular vendor
   def self.scrape_vendor_page(vendor_url)
 
     next_page = vendor_url
@@ -72,7 +76,7 @@ class Scraper
       main_container.css("div.content-view.content-box.content-summary").each do |link|
         individual_deal = []
         deal_detail = link.css("div.unit.size3of4").css("h3.headline-xlarge a").text
-        price_detail = link.css("div.unit.size3of4").css("div.content-call-out").text.split(/\s/).first
+        price_detail = link.css("div.unit.size3of4").css("div.content-call-out").text.strip.gsub(/\s+/, " ")
         price_detail = "FREE" if price_detail == ""
         individual_deal << deal_detail << price_detail
         full_page_deals << individual_deal
@@ -85,19 +89,7 @@ class Scraper
       end
 
     end
-
-    binding.pry
     full_page_deals
-    #prev_page = pager.css("a.pager-end[rel=prev]").attribute("href").value if pager.css("a.pager-end[rel=prev]").any?
-    #next_page = pager.css("a.pager-end[rel=next]").attribute("href").value if pager.css("a.pager-end[rel=next]").any?
-
-    #deal_page_complete = {
-    #  :prev_page_link => prev_page,
-    #  :next_page_link => next_page,
-    #  :deals => full_page_deals
-    #}
-
-    #deal_page_complete
-    #binding.pry
   end
+
 end

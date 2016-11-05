@@ -34,8 +34,8 @@ class Scraper
   def self.scrape_vendor_page(vendor_url)
     deals_page = Nokogiri::HTML(open(vendor_url))
 
-    prev_page = nil
-    next_page = nil
+    #prev_page = String.new
+    #next_page = String.new
     full_page_deals = []
 
     #Compile social media links
@@ -50,12 +50,25 @@ class Scraper
     end
 
     pager = main_container.css("div.pager")
-    prev_page = pager.css("a.pager-end[rel=prev]").attribute("href").value if pager.css("a.pager-end[rel=prev]").any?
-    next_page = pager.css("a.pager-end[rel=next]").attribute("href").value if pager.css("a.pager-end[rel=next]").any?
+    
+    if pager.css("a.pager-end[rel=prev]").any?
+      prev_page = pager.css("a.pager-end[rel=prev]").attribute("href").value.gsub("http://dealnews.com","")
+    else
+      prev_page = nil
+    end
+
+    if pager.css("a.pager-end[rel=next]").any?
+      next_page = pager.css("a.pager-end[rel=next]").attribute("href").value.gsub("http://dealnews.com","")
+    else
+      next_page = nil
+    end
+
+    page_num = pager.css("strong.pager-link.pager-current").text
 
     deal_page_complete = {
       :prev_page_link => prev_page,
       :next_page_link => next_page,
+      :pagenum => page_num.to_i,
       :deals => full_page_deals
     }
 

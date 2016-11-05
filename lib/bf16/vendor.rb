@@ -9,7 +9,7 @@ class Vendor
     @@all << self
   end
 
-  #Uses the Scraper class to create new students with the correct name and location
+  #Uses the Scraper class to create new vendors with all the details
   def self.create_from_collection(vendor_index)
     vendor_index.each do |vendor|
       self.new(vendor)
@@ -20,6 +20,7 @@ class Vendor
     @@all
   end
 
+  #Count the total number of vendor index pages
   def self.page_count
     (self.all.count/10.to_f).ceil
   end

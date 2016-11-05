@@ -10,7 +10,7 @@ class Scraper
     vendor_index = []
     counter = 1
 
-    deal_page = index_page.css("h3+div.simple-vendor-grid")[1..-1].css("div.line.grid-line.content-line").each do |vendor_line|
+    vendor_page = index_page.css("h3+div.simple-vendor-grid")[1..-1].css("div.line.grid-line.content-line").each do |vendor_line|
       vendor_line.css("div.unit.tile.size1of3").each do |vendor|
         if vendor.css("div.content-box-hd").css("a").any?
           vendor_details = {
@@ -23,14 +23,13 @@ class Scraper
         else
           break
         end
-        #binding.pry
         vendor_index << vendor_details
       end
     end
-    #binding.pry
     vendor_index
   end
 
+  #Scrape Vendor's Deal Pages one by one as requested
   def self.scrape_vendor_page(vendor_url)
     deals_page = Nokogiri::HTML(open(vendor_url))
 
@@ -38,7 +37,7 @@ class Scraper
     #next_page = String.new
     full_page_deals = []
 
-    #Compile social media links
+    #Compile deals from the page
     main_container = deals_page.css("div.main.browsecontent")
     main_container.css("div.content-view.content-box.content-summary").each do |link|
       individual_deal = []
@@ -49,22 +48,27 @@ class Scraper
       full_page_deals << individual_deal
     end
 
+    #Collect page and page link details
     pager = main_container.css("div.pager")
-    
+
+    #Collect link to previous page, if it exists
     if pager.css("a.pager-end[rel=prev]").any?
       prev_page = pager.css("a.pager-end[rel=prev]").attribute("href").value.gsub("http://dealnews.com","")
     else
       prev_page = nil
     end
 
+    #Collect link to next page, if it exists
     if pager.css("a.pager-end[rel=next]").any?
       next_page = pager.css("a.pager-end[rel=next]").attribute("href").value.gsub("http://dealnews.com","")
     else
       next_page = nil
     end
 
+    #Collect current deal page number
     page_num = pager.css("strong.pager-link.pager-current").text
 
+    #Compile entire deal page Hash
     deal_page_complete = {
       :prev_page_link => prev_page,
       :next_page_link => next_page,
@@ -75,7 +79,7 @@ class Scraper
     deal_page_complete
   end
 
-  #Shows all the deals of a particular vendor
+  #Scrapes all the deals of a particular vendor from all the deal pages
   #def self.scrape_vendor_page(vendor_url)
 
   #  next_page = vendor_url

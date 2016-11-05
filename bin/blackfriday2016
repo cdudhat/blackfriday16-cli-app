@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require_relative "../lib/blackfriday2016.rb"
+
+CommandLineInteface.new.run

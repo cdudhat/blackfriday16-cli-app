@@ -1,4 +1,4 @@
-require_relative '../lib/vendor.rb'
+require_relative '../bf16/vendor.rb'
 require 'pry'
 
 class Dealpage

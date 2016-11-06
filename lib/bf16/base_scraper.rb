@@ -68,12 +68,16 @@ class Scraper
     #Collect current deal page number
     page_num = pager.css("strong.pager-link.pager-current").text
 
+    #Collect Vendor name
+    name = deals_page.css("h1.section-heading").text.gsub(" Black Friday Ads","")
+
     #Compile entire deal page Hash
     deal_page_complete = {
       :prev_page_link => prev_page,
       :next_page_link => next_page,
       :pagenum => page_num.to_i,
-      :deals => full_page_deals
+      :deals => full_page_deals,
+      :vendor_name => name
     }
 
     deal_page_complete

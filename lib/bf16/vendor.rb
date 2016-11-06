@@ -33,4 +33,12 @@ class Vendor
     return_url
   end
 
+  def self.return_vendor_name(page_url)
+    vendor_name = nil
+    self.all.each do |vendor|
+      vendor_name = vendor.name if vendor.page_url == page_url
+    end
+    vendor_name
+  end
+
 end

@@ -1,6 +1,6 @@
-require_relative "../lib/bf16/base_scraper.rb"
-require_relative "../lib/bf16/vendor.rb"
-require_relative "../lib/bf16/dealpage.rb"
+require_relative "./bf16/base_scraper.rb"
+require_relative "./bf16/vendor.rb"
+require_relative "./bf16/dealpage.rb"
 require 'nokogiri'
 require 'colorize'
 
@@ -13,6 +13,7 @@ class CommandLineInteface
     puts "Welcome to 2016 Black Friday Deal Listings!".colorize(:light_red).center(70)
     create_vendors
     display_vendors
+    puts "\n" + "-----------------------".colorize(:light_blue) + "THE-END".colorize(:light_red) + "-------------------------".colorize(:light_blue)
   end
 
   def create_vendors
@@ -22,7 +23,7 @@ class CommandLineInteface
 
   def display_vendors(page_num=1)
     puts "-------------------------------------------------------".colorize(:light_blue)
-    puts "List of Stores offering Black Friday Deals - Page #{page_num}:".center(55)
+    puts "List of Stores - Black Friday Deals - Page #{page_num}:".center(55)
     puts "-------------------------------------------------------".colorize(:light_blue)
     Vendor.all.each do |vendor|
       puts "#{vendor.number}. ".colorize(:light_red) + "#{vendor.name}".colorize(:light_blue) if vendor.index_pagenum == page_num
@@ -40,32 +41,32 @@ class CommandLineInteface
 
   def index_page_options(page_num=1)
     puts "-------------------------------------------------------".colorize(:light_blue)
-    puts "Please select from options below:"
+    puts "Please select from options below:".colorize(:green)
     print_prev_page if (page_num > 1 && page_num <= Vendor.page_count)
     print_next_page if page_num < Vendor.page_count
     puts "\n" + "| Store '" + "#".colorize(:light_red) + "' to " + "See Deals".colorize(:light_blue) + " from a particular Store |"
     puts "| '" + "x".colorize(:light_red) + "' to " + "Exit".colorize(:light_blue) + " the program |"
-    print "\n" + "Please Enter your selection: "
+    print "\n" + "Please Enter your selection: ".colorize(:green)
     input = gets.strip.downcase
     if input == "n"
       display_vendors(page_num+1)
     elsif input == "p"
       display_vendors(page_num-1)
     elsif input.include?(".")
-      puts "You have entered an invalid choice. Please make a valid choice."
+      puts "You have entered an invalid choice. Please make a valid choice.".colorize(:light_blue)
       index_page_options(page_num)
     elsif input.to_i > 0
       store_num = input.to_i
       if store_num <= Vendor.all.count
         display_deal_details(Vendor.return_deal_url(store_num))
       else
-        puts "You have entered an invalid Store Number. Please make a valid choice."
+        puts "You have entered an invalid Store Number. Please make a valid choice.".colorize(:light_blue)
         index_page_options(page_num)
       end
     elsif input == "x"
-      puts "Goodbye! Have a nice day."
+      puts "Goodbye! Have a nice day.".colorize(:light_blue)
     else
-      puts "You have entered an invalid choice. Please make a valid choice."
+      puts "You have entered an invalid choice. Please make a valid choice.".colorize(:light_blue)
       index_page_options(page_num)
     end
   end
@@ -75,34 +76,43 @@ class CommandLineInteface
     current_page = Dealpage.create_new_dealpage(page_url)
     nextpage_url = current_page.next_page_link
     prevpage_url = current_page.prev_page_link
-    puts "Please select from options below:"
+    puts "Please select from options below:".colorize(:green)
     print_prev_page if prevpage_url != nil
     print_next_page if nextpage_url != nil
     puts "\n" + "| '" + "s".colorize(:light_red) + "' to go back to the " + "Store Listing".colorize(:light_blue) + " |"
     puts "| '" + "x".colorize(:light_red) + "' to " + "Exit".colorize(:light_blue) + " the program |"
-    print "\n" + "Please Enter your selection: "
+    print "\n" + "Please Enter your selection: ".colorize(:green)
     input = gets.strip.downcase
     if input == "n"
       nextpage_url = Dealpage.create_new_dealpage(page_url).next_page_link
-      display_deal_details(nextpage_url) if nextpage_url != nil
-      puts "You have reached the end of listings" if nextpage_url == nil
-      display_page_options(page_url)
+      if nextpage_url != nil
+        display_deal_details(nextpage_url)
+      elsif nextpage_url == nil
+        puts "You have reached the end of listings.".colorize(:light_blue)
+        display_page_options(page_url)
+      end
     elsif input == "p"
-      display_deal_details(prevpage_url) if prevpage_url != nil
-      puts "You have reached the beginning of listings" if prevpage_url == nil
-      display_page_options(page_url)
+      if prevpage_url != nil
+        display_deal_details(prevpage_url)
+      elsif prevpage_url == nil
+        puts "You have reached the beginning of listings".colorize(:light_blue)
+        display_page_options(page_url)
+      end
     elsif input == "s"
       display_vendors
     elsif input == "x"
-      puts "Goodbye! Have a nice day."
+      puts "Goodbye! Have a nice day.".colorize(:light_blue)
     else
-      puts "You have entered an invalid choice. Please make a valid choice."
+      puts "You have entered an invalid choice. Please make a valid choice.".colorize(:light_blue)
       display_page_options(page_url)
     end
   end
 
   #To be used if each deal page was being scraped as called for
   def display_deal_details(page_url)
+    current_page = Dealpage.create_new_dealpage(page_url)
+    puts "-------------------------------------------------------".colorize(:light_blue)
+    puts "#{current_page.vendor_name} - Deals - Page #{current_page.pagenum}:".center(55)
     puts "-------------------------------------------------------".colorize(:light_blue)
     current_page = Dealpage.create_new_dealpage(page_url)
     current_page.deals.each do |deal|

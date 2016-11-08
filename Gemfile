@@ -1,5 +1,4 @@
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
-gem 'pry'
-gem 'nokogiri', '1.6.6.2'
-gem 'rspec'
+# Specify your gem's dependencies in nyt_journeys.gemspec
+gemspec

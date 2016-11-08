@@ -1,8 +1,12 @@
+# coding: utf-8
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+#require 'regatta_results/version'
 
 Gem::Specification.new do |s|
   s.name        = 'blackfriday2016'
-  s.version     = '0.0.2'
-  s.date        = '2016-11-05'
+  s.version     = '0.0.3'
+  s.date        = '2016-11-07'
   s.summary     = "Black Friday 2016!"
   s.description = "A simple gem listing Black Friday Deals from various stores"
   s.authors     = ["Chirag D"]
@@ -12,9 +16,10 @@ Gem::Specification.new do |s|
   s.license     = 'MIT'
   s.executables << 'blackfriday2016'
 
-  s.add_development_dependency "bundler", "~> 1.10"
-  s.add_development_dependency "rake", "~> 10.0"
+  s.add_development_dependency "bundler", "~> 1.13"
+  s.add_development_dependency "rake", "~> 11.3"
   s.add_development_dependency "rspec", ">= 0"
-  s.add_development_dependency "nokogiri", ">= 0"
   s.add_development_dependency "pry", ">= 0"
+  s.add_runtime_dependency "nokogiri", ">= 0"
+  s.add_runtime_dependency "colorize", "~> 0.8"
 end

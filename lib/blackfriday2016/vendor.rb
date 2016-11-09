@@ -1,5 +1,5 @@
-require_relative "./base_scraper.rb"
-require_relative './dealpage.rb'
+#require_relative "./base_scraper.rb"
+#require_relative './dealpage.rb'
 require 'pry'
 
 class Vendor

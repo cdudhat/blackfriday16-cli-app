@@ -83,34 +83,4 @@ class Scraper
     deal_page_complete
   end
 
-  #Scrapes all the deals of a particular vendor from all the deal pages
-  #def self.scrape_vendor_page(vendor_url)
-
-  #  next_page = vendor_url
-  #  full_page_deals = []
-
-  #  while next_page != nil do
-  #    deals_page = Nokogiri::HTML(open(next_page))
-  #    main_container = deals_page.css("div.main.browsecontent")
-  #    pager = main_container.css("div.pager")
-
-  #    main_container.css("div.content-view.content-box.content-summary").each do |link|
-  #      individual_deal = []
-  #      deal_detail = link.css("div.unit.size3of4").css("h3.headline-xlarge a").text
-  #      price_detail = link.css("div.unit.size3of4").css("div.content-call-out").text.strip.gsub(/\s+/, " ")
-  #      price_detail = "FREE" if price_detail == ""
-  #      individual_deal << deal_detail << price_detail
-  #      full_page_deals << individual_deal
-  #    end
-
-  #    if pager.css("a.pager-end[rel=next]").any?
-  #      next_page = pager.css("a.pager-end[rel=next]").attribute("href").value
-  #    else
-  #      next_page = nil
-  #    end
-
-  #  end
-  #  full_page_deals
-  #end
-
 end

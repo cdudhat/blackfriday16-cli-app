@@ -1,4 +1,3 @@
-require_relative './vendor.rb'
 require 'pry'
 
 class Dealpage

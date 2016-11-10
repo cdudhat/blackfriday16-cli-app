@@ -1,4 +1,4 @@
-require_relative "../lib/base_scraper.rb"
+require_relative "../lib/blackfriday2016/base_scraper.rb"
 
 describe "#scrape_index_page" do
   it "is a class method that scrapes the index page and a returns an array of hashes in which each hash represents one deal vendor" do

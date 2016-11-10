@@ -1,5 +1,5 @@
-require_relative "../lib/base_scraper.rb"
-require_relative "../lib/deals.rb"
+require_relative "../lib/blackfriday2016/base_scraper.rb"
+require_relative "../lib/blackfriday2016/deals.rb"
 
 describe "#scrape_index_page" do
   it "xyz" do

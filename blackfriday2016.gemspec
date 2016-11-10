@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.date        = '2016-11-09'
   s.summary     = "Black Friday 2016!"
   s.description = "A simple gem listing Black Friday Deals from various stores"
-  s.authors     = ["Chirag D"]
-  s.email       = 'chirag_3030@yahoo.com'
+  s.authors     = ["Chirag Dudhat"]
+  s.email       = 'cdudhat@gmail.com'
   s.files       = ["lib/blackfriday2016.rb", "lib/blackfriday2016/base_scraper.rb", "lib/blackfriday2016/dealpage.rb", "lib/blackfriday2016/vendor.rb", "config/environment.rb" ]
   s.homepage    = 'http://rubygems.org/gems/blackfriday2016'
   s.license     = 'MIT'

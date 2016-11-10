@@ -1,19 +1,24 @@
 
-# Black Friday 2016 Deals Cli Gem
+# Black Friday 2016 Deals Cli App
 
+Welcome to Black Friday 2016 Deals Cli App/Gem. This is a simple gem listing all the Black Friday deals offered by the stores as they are released to the public.
 
 ## Installation
 
-Under Construction
+Fork the repo & Download it to your system & Navigate to the folder.
+
+And execute:
+
+    $ bundle
 
 ## Usage
 
-Under Construction
+Once in the folder and completing the step above, execute:
+
+    $ ./bin/blackfriday2016
+
+Follow the menu options
 
 ## Development
 
-Under Construction
-
-## License
-
-The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
+After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.

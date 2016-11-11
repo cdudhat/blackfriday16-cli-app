@@ -4,8 +4,8 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |s|
   s.name        = 'blackfriday2016'
-  s.version     = '0.1.0'
-  s.date        = '2016-11-09'
+  s.version     = '0.1.2'
+  s.date        = '2016-11-10'
   s.summary     = "Black Friday 2016!"
   s.description = "A simple gem listing Black Friday Deals from various stores"
   s.authors     = ["Chirag Dudhat"]
@@ -16,8 +16,8 @@ Gem::Specification.new do |s|
   s.files         = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(test|spec|features)/})
   end
-  s.bindir        = "exe"
-  s.executables   = s.files.grep(%r{^exe/}) { |f| File.basename(f) }
+  #s.bindir        = "exe"
+  s.executables   = "blackfriday2016"
   s.require_paths = ["lib"]
 
   s.add_development_dependency "bundler", "~> 1.13"

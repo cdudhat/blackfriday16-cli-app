@@ -33,12 +33,10 @@ class Scraper
   def self.scrape_vendor_page(vendor_url)
     deals_page = Nokogiri::HTML(open(vendor_url))
 
-    #prev_page = String.new
-    #next_page = String.new
     full_page_deals = []
 
     #Compile deals from the page
-    main_container = deals_page.css("div.main.browsecontent")
+    main_container = deals_page.css("div.dynamic-pager")
     main_container.css("div.content-view.content-box.content-summary").each do |link|
       individual_deal = []
       deal_detail = link.css("div.unit.size3of4").css("h3.headline-xlarge a").text
@@ -67,9 +65,10 @@ class Scraper
 
     #Collect current deal page number
     page_num = pager.css("strong.pager-link.pager-current").text
+    page_num = "1" if (prev_page == nil && next_page == nil)
 
     #Collect Vendor name
-    name = deals_page.css("h1.section-heading").text.gsub(" Black Friday Ads","")
+    name = deals_page.css("div.banner-tagline h1").text.gsub(" Coupons & Promo Codes for November 2016","")
 
     #Compile entire deal page Hash
     deal_page_complete = {
@@ -79,7 +78,7 @@ class Scraper
       :deals => full_page_deals,
       :vendor_name => name
     }
-
+    
     deal_page_complete
   end
 

@@ -15,10 +15,6 @@ class Dealpage
     Dealpage.new(deal_page_complete)
   end
 
-  def self.next_page
-
-  end
-
   def self.all
     @@all
   end
@@ -27,7 +23,7 @@ class Dealpage
     (self.all.count/10.to_f).ceil
   end
 
-  #Display each deal page with deals from each page as scraped
+  #Display deal page with all the deals from the page as scraped
   def self.display_deal_details(page_url)
     current_page = self.create_new_dealpage(page_url)
     puts "-------------------------------------------------------".colorize(:light_blue)
@@ -39,15 +35,37 @@ class Dealpage
     self.display_page_options(page_url)
   end
 
+  #Prints Previous Page indicator
   def self.print_prev_page
     print "| '" + "p".colorize(:light_red) + "' <<< " + "Previous Page".colorize(:light_blue) + " |"
   end
 
+  #Prints Next Page indicator
   def self.print_next_page
     print "| '" + "n".colorize(:light_red) + "' >>> " + "Next Page".colorize(:light_blue) + " |"
   end
 
-  #Display deal page options
+  #Method to display next page of deals if applicable
+  def self.go_to_next_page(nextpage_url, page_url)
+    if nextpage_url != nil
+      self.display_deal_details(nextpage_url)
+    elsif nextpage_url == nil
+      puts "You have reached the end of Deal Listings of this Store.".colorize(:light_blue)
+      self.display_page_options(page_url)
+    end
+  end
+
+  #Method to display previous page of deals if applicable
+  def self.go_to_prev_page(prevpage_url, page_url)
+    if prevpage_url != nil
+      self.display_deal_details(prevpage_url)
+    elsif prevpage_url == nil
+      puts "You have reached the beginning of Deal Listings of this Store.".colorize(:light_blue)
+      self.display_page_options(page_url)
+    end
+  end
+
+  #Display deal page menu options
   def self.display_page_options(page_url)
     puts "-------------------------------------------------------".colorize(:light_blue)
     current_page = self.create_new_dealpage(page_url)
@@ -61,20 +79,9 @@ class Dealpage
     print "\n" + "Please Enter your selection: ".colorize(:green)
     input = gets.strip.downcase
     if input == "n"
-      nextpage_url = self.create_new_dealpage(page_url).next_page_link
-      if nextpage_url != nil
-        self.display_deal_details(nextpage_url)
-      elsif nextpage_url == nil
-        puts "You have reached the end of Deal Listings of this Store.".colorize(:light_blue)
-        self.display_page_options(page_url)
-      end
+      self.go_to_next_page(nextpage_url, page_url)
     elsif input == "p"
-      if prevpage_url != nil
-        self.display_deal_details(prevpage_url)
-      elsif prevpage_url == nil
-        puts "You have reached the beginning of Deal Listings of this Store.".colorize(:light_blue)
-        self.display_page_options(page_url)
-      end
+      self.go_to_prev_page(prevpage_url, page_url)
     elsif input == "s"
       Vendor.display_vendors
     elsif input == "x"

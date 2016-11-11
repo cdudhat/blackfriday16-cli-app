@@ -1,17 +1,29 @@
 
 # Black Friday 2016 Deals Cli App/Gem
 
+[![Gem Version](https://badge.fury.io/rb/blackfriday2016.svg)](https://badge.fury.io/rb/blackfriday2016)
+
 Welcome to Black Friday 2016 Deals Cli App/Gem. This is a simple gem listing all the Black Friday deals offered by the stores as they are released.
 
 ## Installation
 
-Type as shown below-
+Install it yourself as:
 
     $ gem install blackfriday2016
 
+Alternatively, add this line to your application's Gemfile:
+
+```ruby
+gem 'blackfriday2016'
+```
+
+And then execute:
+
+    $ bundle
+
 ## Usage
 
-Type as shown below and then follow the on screen menu options-
+Type as shown below and then follow the on screen menu options:
 
     $ blackfriday2016
 

@@ -4,8 +4,8 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |s|
   s.name        = 'blackfriday2016'
-  s.version     = '0.1.2'
-  s.date        = '2016-11-10'
+  s.version     = '0.1.4'
+  s.date        = '2016-11-14'
   s.summary     = "Black Friday 2016!"
   s.description = "A simple gem listing Black Friday Deals from various stores"
   s.authors     = ["Chirag Dudhat"]

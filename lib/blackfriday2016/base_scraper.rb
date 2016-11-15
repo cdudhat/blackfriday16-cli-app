@@ -68,7 +68,7 @@ class Scraper
     page_num = "1" if (prev_page == nil && next_page == nil)
 
     #Collect Vendor name
-    name = deals_page.css("div.banner-tagline h1").text.gsub(" Coupons & Promo Codes for November 2016","")
+    name = deals_page.css("div.banner-tagline h1").text.gsub(" Coupons & Promo Codes for Black Friday","")
 
     #Compile entire deal page Hash
     deal_page_complete = {
@@ -78,7 +78,7 @@ class Scraper
       :deals => full_page_deals,
       :vendor_name => name
     }
-    
+
     deal_page_complete
   end
 
